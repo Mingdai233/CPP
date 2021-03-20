@@ -1,18 +1,15 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
-#include"Myarr.h"
-
-
+#include"AMGraph.h"
+#include"ATGraph.h"
 
 int main()
 {
-	SeqList S;
-	Myarr::CreateArr(S, 5);
-	Myarr::ArrEmpty(S);
-	SeqElemtype e = { 18, "lihua" };
-	Myarr::InserElement(S, 1, e);
-	Myarr::ElementPos(S, e);
-	Myarr::DeleteElement(S, 1);
-	Myarr::ArrEmpty(S);
-	Myarr::DestroyList(S);
+	/*AMGraph G(5, 6,1,1);
+	int TD = G.TDnum('A');
+	int TD2 = G.TDnum('B');
+	int TD3 = G.TDnum('C');*/
+	ATGraph G(5, 6,1,1);
+
+	return 0;
 }
