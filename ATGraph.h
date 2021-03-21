@@ -18,10 +18,14 @@ typedef struct Vertexnode
 class ATGraph
 {
 	VTnode *head;
+	bool *visited;//遍历表
 	int vertexnum, edgenum;
 	int dflag, wflag;//方向标志，权值标志
 public:
 	ATGraph(int vertexnum,int edgenum,int wflag=0,int dflag=0);
+	int TDorODnum(Vertextype v);
+	int Locatedv(Vertextype v);
+	void BFSearch(Vertextype v);
 	~ATGraph();
 };
 

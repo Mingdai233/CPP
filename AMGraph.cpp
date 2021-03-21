@@ -14,6 +14,7 @@ AMGraph::AMGraph(int vertexnum, int edgenum, int wflag, int dflag)
 	this->dflag = dflag;
 	this->vertexnum = vertexnum;
 	this->edgenum = edgenum;
+	visited = new bool[vertexnum];//建立遍历数组
 	head = new Vertextype[vertexnum];
 	if (!head)
 	{
@@ -24,6 +25,7 @@ AMGraph::AMGraph(int vertexnum, int edgenum, int wflag, int dflag)
 	{
 		printf("请输入第%d个顶点:", i + 1);
 		cin >> head[i];
+		visited[i] = false;//初始化遍历数组
 	}
 	Matrix = new int*[vertexnum];
 	for (int i = 0; i < vertexnum; i++)
@@ -54,8 +56,8 @@ AMGraph::AMGraph(int vertexnum, int edgenum, int wflag, int dflag)
 			cout << "请输入第" << n + 1 << "条边的两个顶点" << "和其权值" << endl;
 			cin >> v1 >> v2 >> weight;
 		}
-		int i = Locaedgd(head, v1, vertexnum);
-		int j = Locaedgd(head, v2, vertexnum);
+		int i = Locaedv(v1);
+		int j = Locaedv(v2);
 		if (this->dflag == 0)
 		{
 			Matrix[i][j] = weight;
@@ -68,10 +70,11 @@ AMGraph::AMGraph(int vertexnum, int edgenum, int wflag, int dflag)
 	}
 }
 
+//求某一顶点的度
 int AMGraph::TDnum(Vertextype v)
 {
 	int count = 0;
-	int n = Locaedgd(head, v, vertexnum);
+	int n = Locaedv(v);
 	if (dflag == 0)
 	{
 		for (int i = 0; i < vertexnum; i++)
@@ -94,6 +97,35 @@ int AMGraph::TDnum(Vertextype v)
 		}
 	}
 	return count;
+}
+
+//找到顶点下标
+int AMGraph::Locaedv(Vertextype v)
+{
+	for (int i = 0; i < vertexnum; i++)
+	{
+		if (head[i] == v)
+		{
+			return i;
+		}
+	}
+	return -1;//没找到
+}
+
+//深度遍历(起点)
+void AMGraph::DFSearch(Vertextype v)
+{
+	cout.put(v);
+	int n = Locaedv(v);
+	visited[n]=true;
+	for (int i = 0; i < vertexnum; i++)
+	{
+		if (Matrix[n][i] != 0 && Matrix[n][i] != MAXNUM)
+		{
+			if (visited[i] != true)
+				DFSearch(head[i]);
+		}
+	}
 }
 
 AMGraph::~AMGraph()
